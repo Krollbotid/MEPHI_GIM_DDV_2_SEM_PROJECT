@@ -2,7 +2,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include <readline/readline.h>
 #include "structure.h"
 #include "useful.h"
 
@@ -60,7 +59,7 @@ stc* consin(stc *mystc, int *stclen, int *sortstate){
         if(in.id>=0){
             *stclen = *stclen+1;
             mystc = (stc*) realloc(mystc, (*stclen)*sizeof(stc));
-            memcpy((void*) mystc+sizeof(stc)*(*stclen-1), &in, sizeof(stc));
+            memcpy((void*) mystc + sizeof(stc) * (*stclen - 1), &in, sizeof(stc));
 	        *sortstate=0;
         } else {
             printf("ERROR!!! IT IS NOT NATURAL NUMBER!\n");

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <readline/readline.h>
 #include "structure.h"
 #include "inout.h"
 #include "useful.h"
