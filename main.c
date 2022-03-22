@@ -6,13 +6,14 @@
 #include "insertremove.h"
 #include "sort.h"
 #include "timing.h"
+#include <time.h>
 
 int main(){
     srand(time(NULL));
     stc *mystc = NULL;
     int stclen = 0, work = 1, sortstate=0;
     while (work){
-        printf("Menu:\n1.Input\n2.Clear array\n3.Output\n4.Insert 1 element\n5.Remove n elements by index\n6.Sort array\n7.Timing\n8.Exit\n");
+        printf("Menu:\n1.Input\n2.Clear array\n3.Output\n4.Insert 1 element\n5.Remove n elements by index\n6.Sort array\n7.Timing\n8.Timinger\n9.Exit\n");
         char *s=readline("Write id of menu part:");
         int id=strtoint(s);
         free(s);
@@ -43,6 +44,9 @@ int main(){
                 timing();
                 break;
             case 8:
+                timingfromfile();
+                break;
+            case 9:
                 work = 0;
                 break;
         }

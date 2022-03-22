@@ -1,7 +1,8 @@
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #define bufsiz 80
-#include <Windows.h>
+/*#include <Windows.h>
 #include <stdint.h> // portable: uint64_t   MSVC: __int64 
 
 // MSVC defines this in winsock2.h!?
@@ -24,7 +25,7 @@ int gettimeofday(struct timeval * tp, struct timezone * tzp) {
     tp->tv_sec  = (long) ((time - EPOCH) / 10000000L);
     tp->tv_usec = (long) (system_time.wMilliseconds * 1000);
     return 0;
-}
+} */
 
 unsigned long long strtoint(char *s){
     if(s!=NULL){

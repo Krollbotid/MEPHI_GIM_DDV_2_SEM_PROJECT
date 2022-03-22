@@ -6,6 +6,7 @@
 #include "useful.h"
 #include "sort.h"
 #include "inout.h"
+#include <sys/time.h>
 #define TESTNAMELEN 100
 
 void timer(void (*sorter) (void *, size_t , size_t , int (*) (const void *, const void *)), int dotnumber, int amount, int multiplier){
@@ -65,7 +66,7 @@ void timing(){
     timer(&quicksort, dotnumber, amount, multiplier);
 }
 
-void timinger(stc *src, void (*sorter) (void *, size_t , size_t , int (*) (const void *, const void *)), int srclen, int *time) {
+void timinger(stc *src, void (*sorter) (void *, size_t , size_t , int (*) (const void *, const void *)), int srclen, double *time) {
 	struct timeval start, end;
 	gettimeofday(&start, NULL);
     sorter((void*) src, (size_t) srclen, sizeof(stc), &compid);

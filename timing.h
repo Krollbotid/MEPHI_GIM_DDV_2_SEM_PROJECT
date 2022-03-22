@@ -3,5 +3,6 @@
 #define TIMING_H
 
 void timing();
+void timingfromfile();
 
 #endif
