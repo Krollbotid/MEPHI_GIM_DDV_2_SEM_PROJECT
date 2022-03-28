@@ -157,29 +157,29 @@ void shakersort(void *first, size_t number, size_t size, int (*comparator) (cons
 	}
 }
 
-int dividing(void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) {
-    int i = 0, j = number, mid = number / 2;
-    while(1) {
-        while (comparator(first + i * size, first + mid * size) < 0) {
+int partition(void *first, int left, int right, size_t size, int (*comparator) (const void *, const void *)) {
+    void *pivot = first + right * size;
+    int i = left - 1, j;
+    for (j = left; j < right; j++) {
+        if (comparator(pivot, first + j * size) > 0) {
             i++;
+            swap(first + j * size, first + i * size, size);
         }
-        while (comparator(first + j * size, first + mid * size) > 0) {
-            j++;
-        }
-        if (i >= j) {
-            return j;
-        }
-        swap(first + i * size, first + j * size, size);
+    }
+    swap(first + (i + 1) * size, first + right * size, size);
+    return i + 1;
+}
+
+void qs(void *first, int left, int right, size_t size, int (*comparator) (const void *, const void *)) {
+    if (left < right) {
+        int pivot = partition(first, left, right, size, comparator);
+        qs(first, pivot + 1 , right, size, comparator);
+        qs(first, left , pivot - 1, size, comparator);
     }
 }
 
 void quicksort(void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) {
-    if (number > 2) {
-        int d = dividing(first, number, size, comparator);
-        quicksort(first, d, size, comparator);
-        quicksort(first + d + 1, number - d, size, comparator);
-    }
-    return;
+    qs(first, 0, number - 1, size, comparator);
 }
 
 stc* sort(stc *mystc, int *stclen, int *sortstate){

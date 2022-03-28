@@ -92,7 +92,7 @@ void timingfromfile(){
                 timinger(test, &doubleselectionsort, amount1, time + 2);
                 timinger(test, &oddevensort, amount1, time + 3);
                 timinger(test, &shakersort, amount1, time + 4);
-                //timinger(test, &combsort, amount1, time + 5);
+                timinger(test, &combsort, amount1, time + 5);
                 src += amount1;
             }
             test = clear(test, &testlen);
