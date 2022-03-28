@@ -11,7 +11,7 @@
 
 void timer(void (*sorter) (void *, size_t , size_t , int (*) (const void *, const void *)), int dotnumber, int amount, int multiplier){
     stc *test = NULL;
-    int testlen = 0, i = 1, j = 0, begin = 0, len = scalerand(0, TESTNAMELEN + 1);
+    int testlen = 0, i, j, len = scalerand(0, TESTNAMELEN + 1);
     for (i = 1; i <= dotnumber; i++){
         double time = 0;
         for (j = 0; j < amount; j++){
@@ -31,14 +31,14 @@ void timer(void (*sorter) (void *, size_t , size_t , int (*) (const void *, cons
 void timing(){
     printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n");
     char *s=readline("Write amount (natural number) of dots for each sort: ");
-    int dotnumber=strtoint(s);
+    int dotnumber = (int) strtoint(s);
     free(s);
     if (dotnumber<0){
         printf("ERROR!!! PRINT NORMAL DOTS AMOUNT!\n");
         return;
     }
     s=readline("Write amount (natural number) of measures for each dot: ");
-    int amount=strtoint(s);
+    int amount = (int) strtoint(s);
     free(s);
     if (amount<0){
         printf("ERROR!!! PRINT NORMAL MEASURES AMOUNT!\n");
@@ -46,7 +46,7 @@ void timing(){
     }
     printf("Program will generate multiplier*number_of_dot elements for each dot.\n");
     s=readline("Write multiplier (natural number) for number of elements: ");
-    int multiplier=strtoint(s);
+    int multiplier = (int) strtoint(s);
     free(s);
     if (multiplier<0){
         printf("ERROR!!! PRINT NORMAL MULTIPLIER!\n");
@@ -76,27 +76,28 @@ void timinger(stc *src, void (*sorter) (void *, size_t , size_t , int (*) (const
 
 void timingfromfile(){
     printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n");
-    int amount = 100, exp = 3, srclen = 0, srcsortstate = 0, amountoftests = 10;
+    int amount = 100, exp = 2, srclen = 0, srcsortstate = 0, amountoftests = 10;
     stc *src = NULL;
     filin(src, &srclen, &srcsortstate);
-    int testlen = 0, i = 1, k = 0, j = 0;
+    int testlen = 0, i, k, j;
     for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             stc *test = (stc*) malloc(amount1 * sizeof(stc));
-            memcpy(test, src, amount1 * sizeof(stc));
             double *time = (double*) malloc(6 * sizeof(double)), *ptr = time;
-            for (j = 0; j < amount; j++) {
+            for (j = 0; j < amountoftests; j++) {
+                memcpy(test, src, amount1 * sizeof(stc));
                 timinger(test, &combsort, amount1, time);
                 timinger(test, &insertsort, amount1, time + 1);
                 timinger(test, &doubleselectionsort, amount1, time + 2);
-                //timinger(test, &oddevensort, amount1, time + 3);
+                timinger(test, &oddevensort, amount1, time + 3);
                 timinger(test, &shakersort, amount1, time + 4);
                 //timinger(test, &combsort, amount1, time + 5);
+                src += amount1;
             }
             test = clear(test, &testlen);
             for (i = 0; i < 6; i++) {
-                printf("Sort #%d\tAmount:%d\tTime in microsecs:%f\n", i + 1, amount1, *ptr/amount);
+                printf("Sort #%d\tAmount:%d\tTime in microsecs:%f\n", i + 1, amount1, *ptr/amountoftests);
                 ptr++;
             }
             free(time);

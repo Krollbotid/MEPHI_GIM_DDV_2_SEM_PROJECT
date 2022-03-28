@@ -125,11 +125,13 @@ void oddevensort(void *first, size_t number, size_t size, int (*comparator) (con
 		for (i = 0; i + 1 < number; i += 2) {
 			if (comparator(first + i * size, first + (i + 1) * size) > 0) {
 				swap(first + i * size, first + (i + 1) * size, size);
+                sorted = 0;
 			}
 		}
         for (i = 1; i + 1 < number; i += 2) {
 			if (comparator(first + i * size, first + (i + 1) * size) > 0) {
 				swap(first + i * size, first + (i + 1) * size, size);
+                sorted = 0;
 			}
 		}
 	}
@@ -189,7 +191,7 @@ stc* sort(stc *mystc, int *stclen, int *sortstate){
         *sortstate=3;
         return mystc;
     }
-    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n");
+    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n");
     char *s=readline("Write id of menu part: ");
     int id=strtoint(s);
     free(s);

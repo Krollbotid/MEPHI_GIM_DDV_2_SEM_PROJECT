@@ -79,21 +79,17 @@ stc* filin(stc *mystc, int *stclen, int *sortstate){
         char *s=NULL;
 	    do{
             s=freadline(file);
-            if(!(s)){
-                break;
-            }
-            in.name = freadline(file);
-            if (!(in.name)){
-                printf("ERROR!!! STRUCTURE #%d IS NOT FULL!\n", count);
-                break;
-            }
-            s=freadline(file);
             if (!s){
                 printf("ERROR!!! STRUCTURE #%d IS NOT FULL!\n", count);
                 break;
             }
             in.id=strtoint(s);
             free(s);
+            in.name = freadline(file);
+            if (!(in.name)){
+                printf("ERROR!!! STRUCTURE #%d IS NOT FULL!\n", count);
+                break;
+            }
             if(in.id>=0){
                 *stclen = *stclen+1;
 		        *sortstate=0;

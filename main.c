@@ -15,9 +15,9 @@ int main(){
     while (work){
         printf("Menu:\n1.Input\n2.Clear array\n3.Output\n4.Insert 1 element\n5.Remove n elements by index\n6.Sort array\n7.Timing\n8.Timinger\n9.Exit\n");
         char *s=readline("Write id of menu part:");
-        int id=strtoint(s);
+        int id = (int) strtoint(s);
         free(s);
-        if ((id<1)||(id>8)){
+        if ((id<1)||(id>9)){
             printf("ERROR!!! PRINT NORMAL ID!\n");
             continue;
         }
