@@ -74,7 +74,7 @@ void timinger(stc *src, void (*sorter) (void *, size_t , size_t , int (*) (const
     *time += ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
 }
 
-void cvs() {
+void timingfromfile() {
     printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n");
     FILE *file;
     file = fopen("results.csv", "w");
