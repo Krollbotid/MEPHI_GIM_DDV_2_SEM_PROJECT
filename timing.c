@@ -78,143 +78,138 @@ void timingfromfile() {
     printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n");
     FILE *file;
     file = fopen("results.csv", "w");
-    fprintf (file, "method / ");
+    fprintf (file, "method");
 
-    int amount = 10, exp = 5;
+    int amount = 10, exp = 3;
     int srclen = 0, srcsortstate = 0, amountoftests = 10;
     int i, k, j;
 
     for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
-            fprintf (file, "%d / ", amount1);
+            fprintf (file, " / %d", amount1);
         }
         amount *= 10;
     }
     fprintf (file, "\n");
 
     stc *src = NULL;
-    filin(src, &srclen, &srcsortstate);
+    src = filin(src, &srclen, &srcsortstate);
 
-    fprintf (file, "combsort / ");
+    fprintf (file, "combsort");
+    amount = 10;
     for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             stc *test = (stc*) malloc(amount1 * sizeof(stc));
-            double *time = (double*) malloc(sizeof(double)), *ptr = time;
+            double time = 0;
+            printf("%d\n", amount1);
             for (j = 0; j < amountoftests; j++) {
                 memcpy(test, src, amount1 * sizeof(stc));
-                timinger(test, &combsort, amount1, time);
-                src += amount1;
+                timinger(test, &combsort, amount1, &time);
             }
-            test = clear(test, &testlen);
-            fprintf (file, "%f / ", *ptr/amountoftests);
-            ptr++;
-            free(time);
+            free(test);
+            fprintf (file, " / %f", time/amountoftests);
         }
         amount *= 10;
     }
     fprintf (file, "\n");
 
-    fprintf (file, "insertsort / ");
+    fprintf (file, "insertsort");
+    amount = 10;
     for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             stc *test = (stc*) malloc(amount1 * sizeof(stc));
-            double *time = (double*) malloc(sizeof(double)), *ptr = time;
+            double time = 0;
+            printf("%d\n", amount1);
             for (j = 0; j < amountoftests; j++) {
                 memcpy(test, src, amount1 * sizeof(stc));
-                timinger(test, &insertsort, amount1, time);
-                src += amount1;
+                timinger(test, &insertsort, amount1, &time);
             }
-            test = clear(test, &testlen);
-            fprintf (file, "%f / ", *ptr/amountoftests);
-            ptr++;
-            free(time);
+            free(test);
+            fprintf (file, " / %f", time/amountoftests);
         }
         amount *= 10;
     }
     fprintf (file, "\n");
 
-    fprintf (file, "doubleselectionsort / ");
+    fprintf (file, "doubleselectionsort");
+    amount = 10;
     for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             stc *test = (stc*) malloc(amount1 * sizeof(stc));
-            double *time = (double*) malloc(sizeof(double)), *ptr = time;
+            double time = 0;
+            printf("%d\n", amount1);
             for (j = 0; j < amountoftests; j++) {
                 memcpy(test, src, amount1 * sizeof(stc));
-                timinger(test, &doubleselectionsort, amount1, time);
-                src += amount1;
+                timinger(test, &doubleselectionsort, amount1, &time);
             }
-            test = clear(test, &testlen);
-            fprintf (file, "%f / ", *ptr/amountoftests);
-            ptr++;
-            free(time);
+            free(test);
+            fprintf (file, " / %f", time/amountoftests);
         }
         amount *= 10;
     }
     fprintf (file, "\n");
 
-    fprintf (file, "oddevensort / ");
+    fprintf (file, "oddevensort");
+    amount = 10;
     for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             stc *test = (stc*) malloc(amount1 * sizeof(stc));
-            double *time = (double*) malloc(sizeof(double)), *ptr = time;
+            double time = 0;
+            printf("%d\n", amount1);
             for (j = 0; j < amountoftests; j++) {
                 memcpy(test, src, amount1 * sizeof(stc));
-                timinger(test, &oddevensort, amount1, time);
-                src += amount1;
+                timinger(test, &oddevensort, amount1, &time);
             }
-            test = clear(test, &testlen);
-            fprintf (file, "%f / ", *ptr/amountoftests);
-            ptr++;
-            free(time);
+            free(test);
+            fprintf (file, " / %f", time/amountoftests);
         }
         amount *= 10;
     }
     fprintf (file, "\n");
 
-    fprintf (file, "shakersort / ");
+    fprintf (file, "shakersort");
+    amount = 10;
     for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             stc *test = (stc*) malloc(amount1 * sizeof(stc));
-            double *time = (double*) malloc(sizeof(double)), *ptr = time;
+            double time = 0;
+            printf("%d\n", amount1);
             for (j = 0; j < amountoftests; j++) {
                 memcpy(test, src, amount1 * sizeof(stc));
-                timinger(test, &shakersort, amount1, time);
-                src += amount1;
+                timinger(test, &shakersort, amount1, &time);
             }
-            test = clear(test, &testlen);
-            fprintf (file, "%f / ", *ptr/amountoftests);
-            ptr++;
-            free(time);
+            free(test);
+            fprintf (file, " / %f", time/amountoftests);
         }
         amount *= 10;
     }
     fprintf (file, "\n");
 
-    fprintf (file, "quicksort / ");
+    fprintf (file, "quicksort");
+    amount = 10;
     for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             stc *test = (stc*) malloc(amount1 * sizeof(stc));
-            double *time = (double*) malloc(sizeof(double)), *ptr = time;
+            double time = 0;
+            printf("%d\n", amount1);
             for (j = 0; j < amountoftests; j++) {
                 memcpy(test, src, amount1 * sizeof(stc));
-                timinger(test, &quicksort, amount1, time);
-                src += amount1;
+                timinger(test, &quicksort, amount1, &time);
             }
-            test = clear(test, &testlen);
-            fprintf (file, "%f / ", *ptr/amountoftests);
-            ptr++;
-            free(time);
+            free(test);
+            fprintf (file, " / %f", time/amountoftests);
         }
         amount *= 10;
     }
     fprintf (file, "\n");
 
+    src = clear(src, &srclen);
     fclose(file);
 }
