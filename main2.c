@@ -15,7 +15,6 @@ void BubbleSort(int *num, int size) {
     }
 }
 
-/*
 void BubbleSort(void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) {
     int i=0;
     for (i=0; i<number-1; i++) {
@@ -27,7 +26,7 @@ void BubbleSort(void *first, size_t number, size_t size, int (*comparator) (cons
         }
     }
 }
-*/
+
 
 void GnomeSort(int *num, int size) {
     int i = 1;
@@ -50,7 +49,7 @@ void GnomeSort(int *num, int size) {
     }
 }
 
-/*
+
 void GnomeSort(void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) {
     int i=1;
     int j=2;
@@ -69,9 +68,9 @@ void GnomeSort(void *first, size_t number, size_t size, int (*comparator) (const
         }
     }
 }
-*/
 
-/*
+
+
 void Merge(void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) {
     int mid=number/2;
     if (number%2==1)
@@ -111,7 +110,7 @@ void Merge(void *first, size_t number, size_t size, int (*comparator) (const voi
         }
     }
 }
-*/
+
 
 int main()
 {
@@ -164,7 +163,7 @@ int main()
 
 
 
-// Сортировка пузырьком
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void BubbleSort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
     int i = 0;
     for (i = 0; i < number - 1; i++) {
@@ -178,7 +177,7 @@ void BubbleSort(void* first, size_t number, size_t size, int (*comparator) (cons
 }
 
 
-// Гномья сортировка
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void GnomeSort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
     int i = 1;
     int j = 2;
@@ -199,7 +198,7 @@ void GnomeSort(void* first, size_t number, size_t size, int (*comparator) (const
 }
 
 
-// Сортировка слиянием
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void Merge(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
     int mid = number / 2;
     if (number % 2 == 1)
@@ -227,7 +226,7 @@ void Merge(void* first, size_t number, size_t size, int (*comparator) (const voi
                 newarr[m] = first + k * size;
                 k++; m++;
             }
-            while ((j < (mid + st)) && (j < n)) {
+            while ((l < (mid + st)) && (l < n)) {
                 newarr[m] = first + l * size;
                 l++; m++;
             }
@@ -235,6 +234,6 @@ void Merge(void* first, size_t number, size_t size, int (*comparator) (const voi
         }
         a = a * 2;
         for (k = 0; k < number; k++)
-            first + k * size = newarr[k];
+            *((int*) (first + k * size)) = newarr[k];
     }
 }
