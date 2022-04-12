@@ -182,7 +182,7 @@ void quicksort(void *first, size_t number, size_t size, int (*comparator) (const
     qs(first, 0, number - 1, size, comparator);
 }
 
-void BubbleSort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
+void Bubblesort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
     int i = 0;
     for (i = 0; i < number - 1; i++) {
         int j;
@@ -194,7 +194,7 @@ void BubbleSort(void* first, size_t number, size_t size, int (*comparator) (cons
     }
 }
 
-void GnomeSort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
+void Gnomesort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
     int i = 1;
     int j = 2;
     while (i < number) {
@@ -311,10 +311,10 @@ stc* sort(stc *mystc, int *stclen, int *sortstate){
             quicksort(first, number, size, comparator);
             break;
         case 7:
-            BubbleSort(first, number, size, comparator);
+            Bubblesort(first, number, size, comparator);
             break;
         case 8:
-            GnomeSort(first, number, size, comparator);
+            Gnomesort(first, number, size, comparator);
             break;
         case 9:
             Mergesort(first, number, size, comparator);
