@@ -182,6 +182,79 @@ void quicksort(void *first, size_t number, size_t size, int (*comparator) (const
     qs(first, 0, number - 1, size, comparator);
 }
 
+void BubbleSort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
+    int i = 0;
+    for (i = 0; i < number - 1; i++) {
+        int j;
+        for (j = (number - 1); j > i; j--) {
+            if (comparator(first + (j - 1) * size, first + j * size) > 0) {
+                swap(first + (j - 1) * size, first + j * size, size);
+            }
+        }
+    }
+}
+
+void GnomeSort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
+    int i = 1;
+    int j = 2;
+    while (i < number) {
+        if (comparator(first + i * size, first + (i - 1) * size) > 0) {
+            i = j;
+            j++;
+        }
+        else {
+            swap(first + (i - 1) * size, first + i * size, size);
+            i--;
+            if (i == 0) {
+                i = j;
+                j++;
+            }
+        }
+    }
+}
+
+
+
+void Mergesort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
+    int mid = number / 2;
+    if (number % 2 == 1)
+        mid++;
+    int a = 1;
+    int* newarr = (int*)malloc(number * sizeof(int));
+    int st;
+    while (a < number) {
+        st = a;
+        int k = 0;
+        int l = mid;
+        int m = 0;
+        while (st <= mid) {
+            while ((k < st) && (l < number) && (l < (mid + st))) {
+                if (comparator(first + l * size, first + k * size) > 0) {
+                    newarr[m] = *((int*) (first + k * size));
+                    k++; m++;
+                }
+                else {
+                    newarr[m] = *((int*) (first + l * size));
+                    l++; m++;
+                }
+            }
+            while (k < st) {
+                newarr[m] = *((int*) (first + k * size));
+                k++; m++;
+            }
+            while ((l < (mid + st)) && (l < number)) {
+                newarr[m] = *((int*) (first + l * size));
+                l++; m++;
+            }
+            st = st + a;
+        }
+        a = a * 2;
+        for (k = 0; k < number; k++)
+            *((int*) (first + k * size)) = newarr[k];
+    }
+    free(newarr);
+}
+
 stc* sort(stc *mystc, int *stclen, int *sortstate){
     if(mystc==NULL){
         printf("ERROR!!! ARRAY IS EMPTY!\n");
@@ -191,11 +264,11 @@ stc* sort(stc *mystc, int *stclen, int *sortstate){
         *sortstate=3;
         return mystc;
     }
-    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n");
+    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n");
     char *s=readline("Write id of menu part: ");
     int id=strtoint(s);
     free(s);
-    if ((id<1)||(id>6)){
+    if ((id<1)||(id>9)){
         printf("ERROR!!! PRINT NORMAL ID!\n");
         return mystc;
     }
@@ -236,6 +309,15 @@ stc* sort(stc *mystc, int *stclen, int *sortstate){
             break;
         case 6:
             quicksort(first, number, size, comparator);
+            break;
+        case 7:
+            BubbleSort(first, number, size, comparator);
+            break;
+        case 8:
+            GnomeSort(first, number, size, comparator);
+            break;
+        case 9:
+            Mergesort(first, number, size, comparator);
             break;
     }
     *sortstate=mode;

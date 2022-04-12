@@ -75,44 +75,57 @@ void timinger(stc *src, void (*sorter) (void *, size_t , size_t , int (*) (const
 }
 
 void timingfromfile() {
-    printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n");
+    printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Quick sort\n4.Double selection sort\n5.Odd-even sort\n6.Shaker sort\n");
     FILE *file;
-    file = fopen("results.csv", "w");
+    file = fopen("results.csv", "a");
     fprintf (file, "method");
 
-    int amount = 100, exp = 5;
+    int amount = 10, exp = 5;
     int srclen = 0, srcsortstate = 0, amountoftests = 10;
     int i, k, j;
 
-    for (i = 4; i < exp; i++) {
+    /*for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             fprintf (file, " / %d", amount1);
         }
         amount *= 10;
     }
-    fprintf (file, "\n");
+    fprintf (file, "\n");*/
 
     stc *src = NULL;
     src = filin(src, &srclen, &srcsortstate);
 
-    void (*sort[6]) (void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) = {
+    void (*sort[]) (void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) = {
             combsort,
             insertsort,
-            quicksort
+            quicksort,
+            doubleselectionsort,
+            oddevensort,
+            shakersort,
+            Bubblesort,
+            Gnomesort,
+            Mergesort
     };
 
-    char *names[3] = {
+    char *names[] = {
             "combsort",
             "insertsort",
-            "quicksort"
+            "quicksort",
+            "doubleselectionsort",
+            "oddevensort",
+            "shakersort",
+            "Bubblesort",
+            "Gnomesort",
+            "Mergesort"
     };
 
     int l;
-    for (l = 0; l < 3; l++) {
-        amount = 100;
+    for (l = 0; l < 9; l++) {
+        printf("Sorting: %s\n", names[l]);
+        amount = 10;
         fprintf (file,"%s", names[l]);
-        for (i = 4; i < exp; i++) {
+        for (i = 0; i < exp; i++) {
             for (k = 1; k < 10; k++) {
                 int amount1 = amount * k;
                 stc *test = (stc *) malloc(amount1 * sizeof(stc));
@@ -122,7 +135,7 @@ void timingfromfile() {
                     double time2 = 0;
                     memcpy(test, src, amount1 * sizeof(stc));
                     timinger(test, sort[l], amount1, &time2);
-                    printf("Iteration#:%d / %f\n", j, time2);
+                    //printf("Iteration#:%d / %f\n", j, time2);
                     time += time2;
                 }
                 fprintf(file, " / %f", time / amountoftests);
