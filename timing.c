@@ -77,22 +77,23 @@ void timinger(stc *src, void (*sorter) (void *, size_t , size_t , int (*) (const
 void timingfromfile() {
     printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Quick sort\n4.Double selection sort\n5.Odd-even sort\n6.Shaker sort\n");
     FILE *file;
-    file = fopen("results.csv", "a");
+    file = fopen("results.csv", "w");
     fprintf (file, "method");
 
     int amount = 10, exp = 5;
     int srclen = 0, srcsortstate = 0, amountoftests = 10;
     int i, k, j;
 
-    /*for (i = 0; i < exp; i++) {
+    for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             fprintf (file, " / %d", amount1);
         }
         amount *= 10;
     }
-    fprintf (file, "\n");*/
+    fprintf (file, "\n");
 
+    //fprintf (file, "\n");
     stc *src = NULL;
     src = filin(src, &srclen, &srcsortstate);
 
@@ -101,11 +102,12 @@ void timingfromfile() {
             insertsort,
             quicksort,
             doubleselectionsort,
-            oddevensort,
             shakersort,
+            heapsort,
             Bubblesort,
             Gnomesort,
-            Mergesort
+            Mergesort,
+            oddevensort
     };
 
     char *names[] = {
@@ -113,15 +115,16 @@ void timingfromfile() {
             "insertsort",
             "quicksort",
             "doubleselectionsort",
-            "oddevensort",
             "shakersort",
+            "heapsort",
             "Bubblesort",
             "Gnomesort",
-            "Mergesort"
+            "Mergesort",
+            "oddevensort"
     };
 
     int l;
-    for (l = 0; l < 9; l++) {
+    for (l = 0; l < 10; l++) {
         printf("Sorting: %s\n", names[l]);
         amount = 10;
         fprintf (file,"%s", names[l]);
@@ -140,6 +143,10 @@ void timingfromfile() {
                 }
                 fprintf(file, " / %f", time / amountoftests);
                 free(test);
+                if(time > 3000000000) {
+                    k = 10;
+                    i = exp;
+                }
             }
             amount *= 10;
         }

@@ -254,6 +254,31 @@ void Mergesort(void* first, size_t number, size_t size, int (*comparator) (const
     }
     free(newarr);
 }
+void heapify(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*), int i) {
+    int max = i, left = 2 * i + 1, right = 2 * i + 2;
+    if (left < number && (comparator(first + size * left, first + size * max) == 1)) {
+        max = left;
+    }
+    if (right < number && (comparator(first + size * right, first + size * max) == 1)) {
+        max = right;
+    }
+    if (max != i) {
+        swap(first + size * max, first + size * i, size);
+        heapify(first, number, size, comparator, max);
+    }
+    return;
+}
+
+void heapsort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
+    int i;
+    for (i = number / 2 - 1; i >= 0; i--) {
+        heapify(first, number, size, comparator, i);
+    }
+    for (i = number - 1; i >= 0; i--) {
+        swap(first, first + size * i, size);
+        heapify(first, i, size, comparator, 0);
+    }
+}
 
 stc* sort(stc *mystc, int *stclen, int *sortstate){
     if(mystc==NULL){
@@ -264,11 +289,11 @@ stc* sort(stc *mystc, int *stclen, int *sortstate){
         *sortstate=3;
         return mystc;
     }
-    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n");
+    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n10.Heap sort\n");
     char *s=readline("Write id of menu part: ");
     int id=strtoint(s);
     free(s);
-    if ((id<1)||(id>9)){
+    if ((id<1)||(id>10)){
         printf("ERROR!!! PRINT NORMAL ID!\n");
         return mystc;
     }
@@ -291,35 +316,19 @@ stc* sort(stc *mystc, int *stclen, int *sortstate){
             comparator = &compname;
             break;
     }
-    switch(id){
-        case 1:
-            combsort(first, number, size, comparator);
-            break;
-        case 2:
-            insertsort(first, number, size, comparator);
-            break;
-        case 3:
-            doubleselectionsort(first, number, size, comparator);
-            break;
-        case 4:
-            oddevensort(first, number, size, comparator);
-            break;
-        case 5:
-            shakersort(first, number, size, comparator);
-            break;
-        case 6:
-            quicksort(first, number, size, comparator);
-            break;
-        case 7:
-            Bubblesort(first, number, size, comparator);
-            break;
-        case 8:
-            Gnomesort(first, number, size, comparator);
-            break;
-        case 9:
-            Mergesort(first, number, size, comparator);
-            break;
-    }
+    void (*sort[]) (void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) = {
+            combsort,
+            insertsort,
+            doubleselectionsort,
+            oddevensort,
+            quicksort,
+            shakersort,
+            Bubblesort,
+            Gnomesort,
+            Mergesort,
+            heapsort
+    };
+    sort[id - 1] (first, number, size, comparator);
     *sortstate=mode;
     return mystc;
 }
