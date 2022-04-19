@@ -84,16 +84,15 @@ void timingfromfile() {
     int srclen = 0, srcsortstate = 0, amountoftests = 10;
     int i, k, j;
 
-    for (i = 0; i < exp; i++) {
+    /*for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
-            fprintf (file, " / %d", amount1);
+            fprintf (file, "/%d", amount1);
         }
         amount *= 10;
-    }
+    }*/
     fprintf (file, "\n");
 
-    //fprintf (file, "\n");
     stc *src = NULL;
     src = filin(src, &srclen, &srcsortstate);
 
@@ -124,7 +123,7 @@ void timingfromfile() {
     };
 
     int l;
-    for (l = 0; l < 10; l++) {
+    for (l = 4; l < 10; l++) {
         printf("Sorting: %s\n", names[l]);
         amount = 10;
         fprintf (file,"%s", names[l]);
@@ -141,7 +140,7 @@ void timingfromfile() {
                     //printf("Iteration#:%d / %f\n", j, time2);
                     time += time2;
                 }
-                fprintf(file, " / %f", time / amountoftests);
+                fprintf(file, "/%f", time / amountoftests);
                 free(test);
                 if(time > 3000000000) {
                     k = 10;
