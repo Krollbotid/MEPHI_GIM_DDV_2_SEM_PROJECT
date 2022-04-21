@@ -77,14 +77,14 @@ void timinger(stc *src, void (*sorter) (void *, size_t , size_t , int (*) (const
 void timingfromfile() {
     printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Quick sort\n4.Double selection sort\n5.Odd-even sort\n6.Shaker sort\n");
     FILE *file;
-    file = fopen("results.csv", "w");
-    fprintf (file, "method");
+    file = fopen("results.csv", "a");
 
     int amount = 10, exp = 5;
     int srclen = 0, srcsortstate = 0, amountoftests = 10;
     int i, k, j;
 
-    /*for (i = 0; i < exp; i++) {
+    /*fprintf (file, "method");
+    for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             fprintf (file, "/%d", amount1);
