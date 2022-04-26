@@ -4,6 +4,7 @@
 #include <string.h>
 #include "structure.h"
 #include "useful.h"
+#include <math.h>
 
 int compid(const void *x1, const void *x2){
     unsigned long long y1 = (*(stc*)x1).id, y2 = (*(stc*)x2).id;
@@ -279,6 +280,20 @@ void heapsort(void* first, size_t number, size_t size, int (*comparator) (const 
         heapify(first, i, size, comparator, 0);
     }
 }
+void isort(void* first, int left, int right, size_t size, int (*comparator) (const void*, const void*), int maxdepth) {
+    if (left < right) {
+        if (!maxdepth) {
+            heapsort(first + size * left, right - left + 1, size, comparator);
+        } else {
+            int pivot = partition(first, left, right, size, comparator);
+            isort(first, pivot + 1, right, size, comparator, maxdepth - 1);
+            isort(first, left, pivot - 1, size, comparator, maxdepth - 1);
+        }
+    }
+}
+void introsort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
+    isort(first, 0, number - 1, size, comparator, 2 * log(number) / log(2));
+}
 
 stc* sort(stc *mystc, int *stclen, int *sortstate){
     if(mystc==NULL){
@@ -289,11 +304,11 @@ stc* sort(stc *mystc, int *stclen, int *sortstate){
         *sortstate=3;
         return mystc;
     }
-    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n10.Heap sort\n");
+    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n10.Heap sort\n11.Introspective sort\n");
     char *s=readline("Write id of menu part: ");
     int id=strtoint(s);
     free(s);
-    if ((id<1)||(id>10)){
+    if ((id<1)||(id>11)){
         printf("ERROR!!! PRINT NORMAL ID!\n");
         return mystc;
     }
@@ -326,7 +341,8 @@ stc* sort(stc *mystc, int *stclen, int *sortstate){
             Bubblesort,
             Gnomesort,
             Mergesort,
-            heapsort
+            heapsort,
+            introsort
     };
     sort[id - 1] (first, number, size, comparator);
     *sortstate=mode;

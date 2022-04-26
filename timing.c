@@ -75,7 +75,7 @@ void timinger(stc *src, void (*sorter) (void *, size_t , size_t , int (*) (const
 }
 
 void timingfromfile() {
-    printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Quick sort\n4.Double selection sort\n5.Odd-even sort\n6.Shaker sort\n");
+    printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n10.Heap sort\n11.Introspective sort\n");
     FILE *file;
     file = fopen("results.csv", "a");
 
@@ -106,7 +106,8 @@ void timingfromfile() {
             Bubblesort,
             Gnomesort,
             Mergesort,
-            oddevensort
+            oddevensort,
+            introsort
     };
 
     char *names[] = {
@@ -119,11 +120,12 @@ void timingfromfile() {
             "Bubblesort",
             "Gnomesort",
             "Mergesort",
-            "oddevensort"
+            "oddevensort",
+            "introsort"
     };
 
     int l;
-    for (l = 4; l < 10; l++) {
+    for (l = 10; l < 11; l++) {
         printf("Sorting: %s\n", names[l]);
         amount = 10;
         fprintf (file,"%s", names[l]);

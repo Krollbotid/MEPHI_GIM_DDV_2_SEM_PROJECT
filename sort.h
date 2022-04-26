@@ -15,6 +15,7 @@ void Bubblesort(void* first, size_t number, size_t size, int (*comparator) (cons
 void Gnomesort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*));
 void Mergesort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*));
 void heapsort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*));
+void introsort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*));
 stc* sort(stc *mystc, int *stclen, int *sortstate);
 
 #endif
