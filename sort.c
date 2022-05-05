@@ -25,6 +25,17 @@ int compname(const void *x1, const void *x2){
     return strcmp((const char*) y1, (const char*) y2);
 }
 
+int compint(const void *x1, const void *x2){
+    unsigned long long y1 = *((int*) x1), y2 = *((int*) x2);
+    if (y1 > y2) {
+        return 1;
+    }
+    if (y1 == y2){
+        return 0;
+    }
+    return -1;
+}
+
 int binsearch(void *beg, size_t number, size_t size, void *item, size_t sortstate){
     int (*comparator) (const void *, const void *) = NULL;
     switch(sortstate){

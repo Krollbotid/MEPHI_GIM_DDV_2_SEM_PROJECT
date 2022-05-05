@@ -74,71 +74,95 @@ void timinger(stc *src, void (*sorter) (void *, size_t , size_t , int (*) (const
     *time += ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
 }
 
+void timingerint(void *src, void (*sorter) (void *, size_t , size_t , int (*) (const void *, const void *)), int srclen, double *time) {
+    struct timeval start, end;
+    gettimeofday(&start, NULL);
+    sorter(src, (size_t) srclen, sizeof(int), &compint);
+    gettimeofday(&end, NULL);
+    *time += ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
+}
+
+void *readintfrombinary(long long size){
+    char *name = readline("Print name of file: ");
+    FILE *file = fopen(name, "rb");
+    free(name);
+    void *src = NULL;
+    if (file){
+        src = malloc(size * sizeof(int));
+        fread(src, sizeof(int), size, file);
+        fclose(file);
+    } else {
+        printf("ERROR!!! THIS FILE DOESN'T EXIST!\n");
+    }
+    return src;
+}
+
 void timingfromfile() {
     printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n10.Heap sort\n11.Introspective sort\n");
     FILE *file;
-    file = fopen("results.csv", "a");
+    file = fopen("resultsofint.csv", "a");
 
-    int amount = 10, exp = 5;
+    int amount = 10, exp = 8;
     int srclen = 0, srcsortstate = 0, amountoftests = 10;
     int i, k, j;
 
-    /*fprintf (file, "method");
+    fprintf (file, "method");
     for (i = 0; i < exp; i++) {
         for (k = 1; k < 10; k++) {
             int amount1 = amount * k;
             fprintf (file, "/%d", amount1);
         }
         amount *= 10;
-    }*/
+    }
     fprintf (file, "\n");
 
-    stc *src = NULL;
-    src = filin(src, &srclen, &srcsortstate);
+    /*stc *src = filin(src, &srclen, &srcsortstate);*/
+    void *src = readintfrombinary(900000000);
+
 
     void (*sort[]) (void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) = {
             combsort,
-            insertsort,
+            //insertsort,
             quicksort,
-            doubleselectionsort,
-            shakersort,
+            //doubleselectionsort,
+            //shakersort,
             heapsort,
-            Bubblesort,
-            Gnomesort,
-            Mergesort,
-            oddevensort,
+            //Bubblesort,
+            //Gnomesort,
+            //Mergesort,
+            //oddevensort,
             introsort
     };
 
     char *names[] = {
             "combsort",
-            "insertsort",
+            //"insertsort",
             "quicksort",
-            "doubleselectionsort",
-            "shakersort",
+            //"doubleselectionsort",
+            //"shakersort",
             "heapsort",
-            "Bubblesort",
-            "Gnomesort",
-            "Mergesort",
-            "oddevensort",
+            //"Bubblesort",
+            //"Gnomesort",
+            //"Mergesort",
+            //"oddevensort",
             "introsort"
     };
 
     int l;
-    for (l = 10; l < 11; l++) {
+    for (l = 0; l < 4; l++) {
         printf("Sorting: %s\n", names[l]);
         amount = 10;
         fprintf (file,"%s", names[l]);
         for (i = 0; i < exp; i++) {
             for (k = 1; k < 10; k++) {
                 int amount1 = amount * k;
-                stc *test = (stc *) malloc(amount1 * sizeof(stc));
+                void *test = malloc(amount1 * sizeof(stc));
                 printf("%d\n", amount1);
                 double time = 0;
                 for (j = 0; j < amountoftests; j++) {
                     double time2 = 0;
                     memcpy(test, src, amount1 * sizeof(stc));
-                    timinger(test, sort[l], amount1, &time2);
+                    timingerint(test, sort[l], amount1, &time2);
                     //printf("Iteration#:%d / %f\n", j, time2);
                     time += time2;
                 }
