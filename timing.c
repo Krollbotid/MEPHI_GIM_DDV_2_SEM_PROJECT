@@ -82,21 +82,6 @@ void timingerint(void *src, void (*sorter) (void *, size_t , size_t , int (*) (c
     *time += ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
 }
 
-void *readintfrombinary(long long size){
-    char *name = readline("Print name of file: ");
-    FILE *file = fopen(name, "rb");
-    free(name);
-    void *src = NULL;
-    if (file){
-        src = malloc(size * sizeof(int));
-        fread(src, sizeof(int), size, file);
-        fclose(file);
-    } else {
-        printf("ERROR!!! THIS FILE DOESN'T EXIST!\n");
-    }
-    return src;
-}
-
 void timingfromfile() {
     printf("Timing menu. You'll get time of sorting by:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n10.Heap sort\n11.Introspective sort\n");
     FILE *file;
@@ -131,7 +116,8 @@ void timingfromfile() {
             //Gnomesort,
             //Mergesort,
             //oddevensort,
-            introsort
+            introsort,
+            //pigeonholesort
     };
 
     char *names[] = {

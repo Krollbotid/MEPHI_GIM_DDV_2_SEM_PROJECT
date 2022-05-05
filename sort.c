@@ -5,6 +5,8 @@
 #include "structure.h"
 #include "useful.h"
 #include <math.h>
+#include "sort.h"
+#include "inout.h"
 
 int compid(const void *x1, const void *x2){
     unsigned long long y1 = (*(stc*)x1).id, y2 = (*(stc*)x2).id;
@@ -304,6 +306,99 @@ void isort(void* first, int left, int right, size_t size, int (*comparator) (con
 }
 void introsort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
     isort(first, 0, number - 1, size, comparator, 2 * log(number) / log(2));
+}
+
+void pigeonholesort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) { // only for ints!
+    int i;
+    int *ptr = (int*) first;
+    List *list = (List*) malloc(sizeof(List)), *ptr2, *ptr_prev;
+    list->count = 0;
+    list->next = NULL;
+    list->number = *ptr;
+    for (i = 0; i < number; i++) {
+        ptr2 = list;
+        ptr_prev = NULL;
+        while (ptr2 && (*ptr > ptr2->number)) {
+            ptr_prev = ptr2;
+            ptr2 = ptr2->next;
+        }
+        if (ptr2) {
+            if (*ptr == ptr2->number) {
+                ptr2->count = ptr2->count + 1;
+            } else {
+                ptr2 = (List*) malloc (sizeof(List));
+                ptr2->count = 1;
+                ptr2->number = *ptr;
+                if (!ptr_prev) {
+                    ptr2->next = list;
+                    list = ptr2;
+                } else {
+                    ptr2->next = ptr_prev->next;
+                    ptr_prev->next = ptr2;
+                }
+            }
+        } else {
+            ptr2 = (List*) malloc (sizeof(List));
+            ptr_prev->next = ptr2;
+            ptr2->count = 1;
+            ptr2->next = NULL;
+            ptr2->number = *ptr;
+        }
+        ptr++;
+    }
+    ptr = (int*) first;
+    while (list) {
+        ptr2 = list;
+        while (ptr2->count) {
+            *ptr = list->number;
+            ptr++;
+            ptr2->count = ptr2->count - 1;
+        }
+        list = list->next;
+        free(ptr2);
+    }
+    return;
+}
+void sortint() {
+    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n10.Heap sort\n11.Introspective sort\n12.Pigeonhole sort\n");
+    char *s = readline("Write id of menu part: ");
+    int id = strtoint(s);
+    free(s);
+    if (id < 1 || id > 12){
+        printf("ERROR!!! PRINT NORMAL ID!\n");
+        return;
+    }
+    int k = 20;
+    void *src = readintfrombinary(k);
+    int *ptr = (int*) src;
+    for (int i = 0; i < k; i++) {
+        printf("%d ", *ptr);
+        printf("\n");
+        ptr++;
+    }
+    printf("\n-------\n");
+    void (*sort[]) (void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) = {
+            combsort,
+            insertsort,
+            doubleselectionsort,
+            oddevensort,
+            quicksort,
+            shakersort,
+            Bubblesort,
+            Gnomesort,
+            Mergesort,
+            heapsort,
+            introsort,
+            pigeonholesort
+    };
+    sort[id - 1](src, k, sizeof(int), compint);
+    ptr = (int*) src;
+    for (int i = 0; i < k; i++) {
+        printf("%d ", *ptr);
+        printf("\n");
+        ptr++;
+    }
+    return;
 }
 
 stc* sort(stc *mystc, int *stclen, int *sortstate){

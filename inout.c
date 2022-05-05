@@ -190,6 +190,21 @@ stc* filout(stc *mystc, int *stclen){
     return mystc;
 }
 
+void *readintfrombinary(long long size){
+    char *name = readline("Print name of file: ");
+    FILE *file = fopen(name, "rb");
+    free(name);
+    void *src = NULL;
+    if (file){
+        src = malloc(size * sizeof(int));
+        fread(src, sizeof(int), size, file);
+        fclose(file);
+    } else {
+        printf("ERROR!!! THIS FILE DOESN'T EXIST!\n");
+    }
+    return src;
+}
+
 stc* input(stc *mystc, int *stclen, int *sortstate){
     printf("Input menu:\n1.Input from console\n2.Input from file\n3.Random generation of array\n");
     char *s=readline("Write id of menu part: ");

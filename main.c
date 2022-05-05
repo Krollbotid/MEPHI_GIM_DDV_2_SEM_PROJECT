@@ -13,11 +13,11 @@ int main(){
     stc *mystc = NULL;
     int stclen = 0, work = 1, sortstate=0;
     while (work){
-        printf("Menu:\n1.Input\n2.Clear array\n3.Output\n4.Insert 1 element\n5.Remove n elements by index\n6.Sort array\n7.Timing\n8.Timinger\n9.Exit\n");
+        printf("Menu:\n1.Input\n2.Clear array\n3.Output\n4.Insert 1 element\n5.Remove n elements by index\n6.Sort array\n7.Timing\n8.Timinger\n9.Sort ints\n10.Exit\n");
         char *s=readline("Write id of menu part:");
         int id = (int) strtoint(s);
         free(s);
-        if ((id<1)||(id>9)){
+        if ((id<1)||(id>10)){
             printf("ERROR!!! PRINT NORMAL ID!\n");
             continue;
         }
@@ -47,6 +47,9 @@ int main(){
                 timingfromfile();
                 break;
             case 9:
+                sortint();
+                break;
+            case 10:
                 work = 0;
                 break;
         }
