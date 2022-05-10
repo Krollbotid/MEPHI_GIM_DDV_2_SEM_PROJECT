@@ -106,32 +106,33 @@ void timingfromfile() {
 
 
     void (*sort[]) (void *first, size_t number, size_t size, int (*comparator) (const void *, const void *)) = {
-            combsort,
+            //combsort,
             //insertsort,
-            quicksort,
+            //quicksort,
             //doubleselectionsort,
             //shakersort,
-            heapsort,
+            //heapsort,
             //Bubblesort,
             //Gnomesort,
             //Mergesort,
             //oddevensort,
-            introsort,
+            //introsort,
             //pigeonholesort
     };
 
     char *names[] = {
-            "combsort",
+            //"combsort",
             //"insertsort",
-            "quicksort",
+            //"quicksort",
             //"doubleselectionsort",
             //"shakersort",
-            "heapsort",
+            //"heapsort",
             //"Bubblesort",
             //"Gnomesort",
             //"Mergesort",
             //"oddevensort",
-            "introsort"
+            //"introsort",
+            "pigeonholesort"
     };
 
     int l;
