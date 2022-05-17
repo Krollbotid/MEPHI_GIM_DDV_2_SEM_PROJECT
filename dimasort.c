@@ -84,9 +84,9 @@ void countsort(void* first, int n) {
     max = min = *ptr;
 
     for(i = 0; i < n; i++){
-        if(max > *(ptr + i))
+        if(max < *(ptr + i))
             max = *(ptr + i);
-        if(min < *(ptr + i))
+        if(min > *(ptr + i))
             min = *(ptr + i);
     }
 
