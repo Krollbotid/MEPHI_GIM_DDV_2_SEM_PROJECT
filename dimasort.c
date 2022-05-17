@@ -12,6 +12,8 @@ void Bubblesort(void* first, size_t number, size_t size, int (*comparator) (cons
     }
 }
 
+
+
 void Gnomesort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) {
     int i = 1;
     int j = 2;
@@ -71,4 +73,48 @@ void Mergesort(void* first, size_t number, size_t size, int (*comparator) (const
             *((int*) (first + k * size)) = newarr[k];
     }
     free(newarr);
+}
+
+
+
+void countsort(void* first, int n) {
+    int *ptr = (int*) first;
+    int i;
+    int max, min;
+    max = min = *ptr;
+
+    for(i = 0; i < n; i++){
+        if(max > *(ptr + i))
+            max = *(ptr + i);
+        if(min < *(ptr + i))
+            min = *(ptr + i);
+    }
+
+    int count[max+1];
+    for(i = 0; i <= max; i++){
+        count[i] = 0;
+    }
+
+    for(i = 0; i < n; i++){
+        count[*(ptr + i)]++;
+    }
+
+    for(i = 1; i <= max; i++){
+        count[i] += count[i-1];
+    }
+
+    int sorted_arr[n];
+
+    for(i = 0; i < n; i++){
+        sorted_arr[count[*(ptr + i)]-1] = *(ptr + i);
+        count[*(ptr + i)]--;
+    }
+    for(i = 0; i < n; i++){
+        *(ptr + i) = sorted_arr[i];
+    }
+    free(count);
+    free(sorted_arr);
+}
+void countingsort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*)) { // only for ints!
+    countsort(first,  number);
 }

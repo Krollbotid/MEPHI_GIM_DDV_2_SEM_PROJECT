@@ -27,6 +27,7 @@ typedef struct List {
 } List;
 
 void pigeonholesort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*));
+void countingsort(void* first, size_t number, size_t size, int (*comparator) (const void*, const void*));
 void sortint();
 
 #endif

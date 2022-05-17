@@ -288,11 +288,11 @@ void pigeonholesort(void* first, size_t number, size_t size, int (*comparator) (
     return;
 }
 void sortint() {
-    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n10.Heap sort\n11.Introspective sort\n12.Pigeonhole sort\n");
+    printf("Sort menu:\n1.Comb sort\n2.Insertion sort\n3.Double selection sort\n4.Odd-even sort\n5.Shaker sort\n6.Quick sort\n7.Bubble sort\n8.Gnome sort\n9.Merge sort\n10.Heap sort\n11.Introspective sort\n12.Pigeonhole sort\n13.Counting sort\n");
     char *s = readline("Write id of menu part: ");
     int id = strtoint(s);
     free(s);
-    if (id < 1 || id > 12){
+    if (id < 1 || id > 13){
         printf("ERROR!!! PRINT NORMAL ID!\n");
         return;
     }
@@ -317,7 +317,8 @@ void sortint() {
             Mergesort,
             heapsort,
             introsort,
-            pigeonholesort
+            pigeonholesort,
+            countingsort
     };
     sort[id - 1](src, k, sizeof(int), compint);
     ptr = (int*) src;
